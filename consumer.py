@@ -1,11 +1,12 @@
 import kombu
 import settings
 
-from message_consumer import TaskConsumer
+from plutus.message_consumer import MessageConsumer
+
 
 def main():
     with kombu.Connection(settings.RABBITMQ_DSN) as conn:
-        consumer = TaskConsumer(conn)
+        consumer = MessageConsumer(conn)
         consumer.run()
 
 

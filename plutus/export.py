@@ -2,7 +2,7 @@ import typing as t
 
 import dateutil.parser as parser
 
-import message_queue
+from plutus import message_queue
 import settings
 
 
