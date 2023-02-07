@@ -17,5 +17,4 @@ def add(message: dict, provider: str, queue_name: str) -> None:
             errback=_on_error, max_retries=3, interval_start=0.2, interval_step=0.4, interval_max=1, timeout=3
         )
         q = conn.SimpleQueue(queue_name)
-        print("AdDED ONTO QUEUE")
         q.put(message, headers={"X-Provider": provider})
