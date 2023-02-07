@@ -1,7 +1,7 @@
 import kombu
-import settings
 
-from plutus.message_consumer import MessageConsumer
+import settings
+from app.message_consumer import MessageConsumer
 
 
 def main():

@@ -3,12 +3,14 @@ from typing import Any, Type
 import kombu
 from kombu.mixins import ConsumerMixin
 
-from export import (export_transaction_request_event,
-                    export_transaction_response_event)
+import settings
+
+from .export_transaction import (export_transaction_request_event,
+                                 export_transaction_response_event)
 
 
 class MessageConsumer(ConsumerMixin):
-    harmonia_audit_queue = kombu.Queue("tx_plutus_dw")
+    harmonia_audit_queue = kombu.Queue(settings.CONSUME_QUEUE_NAME)
 
     def __init__(self, connection: kombu.Connection) -> None:
         self.connection = connection

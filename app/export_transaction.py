@@ -2,8 +2,8 @@ import typing as t
 
 import dateutil.parser as parser
 
-from plutus import message_queue
 import settings
+from app import message_queue
 
 
 class ExportedTransactionRequest(t.TypedDict):
