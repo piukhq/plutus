@@ -6,8 +6,6 @@ name = "pypi"
 [packages]
 kombu = "*"
 python-dateutil = "*"
-black = "*"
-isort = "*"
 
 [dev-packages]
 pytest = "*"
