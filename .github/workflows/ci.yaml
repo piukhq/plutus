@@ -40,7 +40,7 @@ jobs:
       - run: pipenv install --dev --system --deploy --ignore-pipfile
       - run: pytest --verbose --cov app --cov-report=xml --junitxml=report.xml app/tests
       - run: xenon --max-average A --max-modules B --max-absolute B .
-      - run: mypy --ignore-missing-imports app
+      - run: mypy plutus/app --follow-imports skip
       - run: flake8 .
       - run: black --line-length=120 --check .
       - run: isort --check --line-length 120 --profile black .
