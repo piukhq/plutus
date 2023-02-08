@@ -15,7 +15,7 @@ class MessageConsumer(ConsumerMixin):
     def __init__(self, connection: kombu.Connection) -> None:
         self.connection = connection
 
-    def get_consumers(self, Consumer: Type[kombu.Consumer], channel: Any) -> list[kombu.Consumer]:
+    def get_consumers(self, Consumer: Type[kombu.Consumer], channel: Any) -> list[kombu.Consumer]:  # pragma: no cover
         return [Consumer(queues=[self.harmonia_audit_queue], callbacks=[self.on_message])]
 
     @staticmethod

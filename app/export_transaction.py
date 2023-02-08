@@ -77,13 +77,13 @@ def export_transaction_response_event(data: dict) -> None:
     response_body = response["body"]
 
     for transaction in transactions:
-        if "bpl" in provider_slug and "code" in response.keys():
-            response_body = response["code"]
+        if "bpl" in provider_slug and response_body is not str and "code" in response_body.keys():
+            response_body = response_body["code"]
         elif (
             "wasabi" in provider_slug
-            and "Error" in response.keys()
-            or "Message" in response.keys()
-            and status_code == 200
+            and "Error" in response_body.keys()
+            or "wasabi" in provider_slug
+            and "Message" in response_body.keys()
         ):
             response_body = response_body.get("Error") if response_body.get("Error") else response_body.get("Message")
 

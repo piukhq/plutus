@@ -32,6 +32,17 @@ TRANSACTIONS = [
 
 
 @pytest.fixture()
+def dw_request_export():
+    return {}
+
+
+@pytest.fixture()
+def message_consumer():
+    connection = Mock()
+    return MessageConsumer(connection=connection)
+
+
+@pytest.fixture()
 def message_consumer():
     connection = Mock()
     return MessageConsumer(connection=connection)
@@ -125,9 +136,9 @@ def audit_log_squaremeal_success_200():
 
 
 @pytest.fixture()
-def wasabi_failure_200():
+def audit_log_wasabi_failure_200():
     return {
-        "provider_slug": "bpl-viator",
+        "provider_slug": "wasabi-club",
         "transactions": TRANSACTIONS,
         "audit_data": {
             "request": {
@@ -148,9 +159,9 @@ def wasabi_failure_200():
 
 
 @pytest.fixture()
-def wasabi_success_200():
+def audit_log_wasabi_success_200():
     return {
-        "provider_slug": "bpl-viator",
+        "provider_slug": "wasabi-club",
         "transactions": TRANSACTIONS,
         "audit_data": {
             "request": {
