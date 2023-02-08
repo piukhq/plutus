@@ -27,6 +27,7 @@ class ExportedTransactionRequest(t.TypedDict):
     settlement_key: t.Optional[str]
     authorisation_code: t.Optional[str]
     approval_code: t.Optional[str]
+    uid: str
 
 
 class ExportedTransactionResponse(t.TypedDict):
@@ -36,6 +37,7 @@ class ExportedTransactionResponse(t.TypedDict):
     provider_slug: str
     status_code: str
     response_message: dict
+    uid: str
 
 
 def export_transaction_request_event(data: dict) -> None:

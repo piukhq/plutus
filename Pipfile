@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 kombu = "*"
 python-dateutil = "*"
+types-python-dateutil = "*"
 
 [dev-packages]
 pytest = "*"

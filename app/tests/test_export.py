@@ -129,7 +129,7 @@ def test_bpl_export_success(mock_add, audit_log_viator_success_200):
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_bpl_export_success(mock_add, audit_log_viator_404_fail):
+def test_bpl_export_fail(mock_add, audit_log_viator_404_fail):
     export_transaction_response_event(audit_log_viator_404_fail)
     mock_add.assert_called_with(
         {
