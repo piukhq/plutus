@@ -68,7 +68,7 @@ def export_transaction_request_event(data: dict) -> None:
             approval_code=transaction["approval_code"],
             uid=transaction["export_uid"],
         )
-        message_queue.add(exported_transaction_request, provider_slug, settings.DW_QUEUE_NAME)
+        message_queue.add(t.cast(dict, exported_transaction_request), provider_slug, settings.DW_QUEUE_NAME)
 
 
 def export_transaction_response_event(data: dict) -> None:
@@ -101,4 +101,4 @@ def export_transaction_response_event(data: dict) -> None:
             response_message=response_body,
             uid=transaction["export_uid"],
         )
-        message_queue.add(exported_transaction_response, provider_slug, settings.DW_QUEUE_NAME)
+        message_queue.add(t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME)
