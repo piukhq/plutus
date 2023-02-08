@@ -25,7 +25,7 @@ def test_on_message_exports_request_if_retry_count_bigger_than_0(export_response
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_request(mock_add, audit_log_squaremeal_success_200, dw_request_export):
+def test_export_request(mock_add, audit_log_squaremeal_success_200):
     export_transaction_request_event(audit_log_squaremeal_success_200)
     mock_add.assert_called_with(
         {
