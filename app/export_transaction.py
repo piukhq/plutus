@@ -79,8 +79,11 @@ def export_transaction_response_event(data: dict) -> None:
     response_body = response["body"]
 
     for transaction in transactions:
-        if "bpl" in provider_slug and response_body is not str and "code" in response_body.keys():
-            response_body = response_body["code"]
+        if "bpl" in provider_slug:
+            try:
+                response_body = response_body["code"]
+            except (AttributeError, TypeError):
+                response_body = response_body
         elif (
             "wasabi" in provider_slug
             and "Error" in response_body.keys()
