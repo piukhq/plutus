@@ -38,7 +38,7 @@ jobs:
           python-version: "3.10"
       - run: pip install pipenv
       - run: pipenv install --dev --system --deploy --ignore-pipfile
-      - run: pytest --verbose --cov app --cov-report=xml --junitxml=report.xml app/tests/unit
+      - run: pytest --verbose --cov app --cov-report=xml --junitxml=report.xml app/tests
       - run: xenon --max-average A --max-modules B --max-absolute B .
       - run: mypy --ignore-missing-imports app
       - run: flake8 .
