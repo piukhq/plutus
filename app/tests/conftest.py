@@ -32,17 +32,6 @@ TRANSACTIONS = [
 
 
 @pytest.fixture()
-def dw_request_export():
-    return {}
-
-
-@pytest.fixture()
-def message_consumer():
-    connection = Mock()
-    return MessageConsumer(connection=connection)
-
-
-@pytest.fixture()
 def message_consumer():
     connection = Mock()
     return MessageConsumer(connection=connection)
