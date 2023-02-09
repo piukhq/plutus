@@ -37,6 +37,7 @@ jobs:
         with:
           python-version: "3.10"
       - run: pip install poetry
+      - run: poetry config virtualenvs.create false
       - run: poetry install
       - run: pytest --verbose --cov app --cov-report=xml --junitxml=report.xml app/tests
       - run: xenon --max-average A --max-modules B --max-absolute B .
