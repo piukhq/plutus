@@ -40,7 +40,7 @@ def test_export_request(mock_add, audit_log_squaremeal_success_200):
             "loyalty_id": "e2559286-2d84-4256-8a19-d8259e451bac",
             "mid": "test-mid-123",
             "scheme_account_id": 0,
-            "credentials": "Cl1h4vksFj/8EbTzOORVu+4yMWWS4Yvm1vs7hSzYkRZ0Y/muMuWWKHXohziGiXjOFK9dhI1hW286THYqNKJbDM4cD7fv757wjjadP/wIyYMP8f8JosbitHTSP516Wk+7WpH5TcdmstcPBBYnDCTQOVQYSrVU0FiDiWCr9ZrMcZfaz9XYjh3AzcmJ7pl86cAB",
+            "credentials": "Cl1h4vksFj/8EbTzOORVu+4yMWWS4Yvm1vs7hSzYkRZ0Y/muMuWWKHXohziGiXjOFK9dhI1hW286THYqNKJb",
             "status": "EXPORTED",
             "feed_type": "REFUND",
             "location_id": None,
