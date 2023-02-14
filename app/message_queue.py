@@ -22,7 +22,4 @@ def publish_to_exchange(message: dict, exchange: Exchange, queues: list, connect
         errback=_on_error, max_retries=3, interval_start=0.2, interval_step=0.4, interval_max=1, timeout=3
     )
     producer = connection.Producer(serializer="json")
-    producer.publish(
-        message, exchange=exchange, headers=headers, declare=queues
-    )
-
+    producer.publish(message, exchange=exchange, headers=headers, declare=queues)

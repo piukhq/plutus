@@ -3,6 +3,7 @@ from typing import Any, Type, cast
 import kombu
 from kombu.mixins import ConsumerMixin
 from message_queue import publish_to_exchange
+
 import settings
 
 from .export_transaction import export_transaction_request_event, export_transaction_response_event
@@ -30,7 +31,7 @@ class MessageConsumer(ConsumerMixin):
                 exchange=self.exchange,
                 queues=[self.dead_letter_queue],
                 connection=self.connection,
-                headers=message.headers
+                headers=message.headers,
             )
         finally:
             message.ack()

@@ -7,7 +7,6 @@ license = "MIT"
 readme = "README.md"
 packages = [
     { include = "app" },
-    { include = "consumer.py" },
     { include = "settings.py" },
 ]
 

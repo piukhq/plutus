@@ -3,9 +3,9 @@ import typing as t
 import dateutil.parser as parser
 from kombu import Connection
 
-from app.response_helper import get_response_body
 import settings
 from app import message_queue
+from app.response_helper import get_response_body
 
 
 class ExportedTransactionRequest(t.TypedDict):
@@ -38,7 +38,7 @@ class ExportedTransactionResponse(t.TypedDict):
     transaction_id: str
     provider_slug: str
     status_code: str
-    response_message: dict
+    response_message: dict | str
     uid: str
 
 
@@ -90,4 +90,6 @@ def export_transaction_response_event(data: dict, connection: Connection) -> Non
             response_message=response_body,
             uid=transaction["export_uid"],
         )
-        message_queue.add(t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME, connection)
+        message_queue.add(
+            t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME, connection
+        )
