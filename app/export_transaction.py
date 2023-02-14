@@ -1,7 +1,9 @@
 import typing as t
 
 import dateutil.parser as parser
+from kombu import Connection
 
+from app.response_helper import get_response_body
 import settings
 from app import message_queue
 
@@ -40,7 +42,7 @@ class ExportedTransactionResponse(t.TypedDict):
     uid: str
 
 
-def export_transaction_request_event(data: dict) -> None:
+def export_transaction_request_event(data: dict, connection: Connection) -> None:
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
@@ -68,30 +70,17 @@ def export_transaction_request_event(data: dict) -> None:
             approval_code=transaction["approval_code"],
             uid=transaction["export_uid"],
         )
-        message_queue.add(t.cast(dict, exported_transaction_request), provider_slug, settings.DW_QUEUE_NAME)
+        message_queue.add(t.cast(dict, exported_transaction_request), provider_slug, settings.DW_QUEUE_NAME, connection)
 
 
-def export_transaction_response_event(data: dict) -> None:
+def export_transaction_response_event(data: dict, connection: Connection) -> None:
     transactions = data["transactions"]
     response = data["audit_data"]["response"]
     provider_slug = data["provider_slug"]
     status_code = response["status_code"]
-    response_body = response["body"]
 
     for transaction in transactions:
-        if "bpl" in provider_slug:
-            try:
-                response_body = response_body["code"]
-            except (AttributeError, TypeError):
-                response_body = response_body
-        elif (
-            "wasabi" in provider_slug
-            and "Error" in response_body.keys()
-            or "wasabi" in provider_slug
-            and "Message" in response_body.keys()
-        ):
-            response_body = response_body.get("Error") if response_body.get("Error") else response_body.get("Message")
-
+        response_body = get_response_body(provider_slug, response["body"])
         exported_transaction_response = ExportedTransactionResponse(
             event_type="transaction.exported.response",
             event_date_time=transaction["event_date_time"],
@@ -101,4 +90,4 @@ def export_transaction_response_event(data: dict) -> None:
             response_message=response_body,
             uid=transaction["export_uid"],
         )
-        message_queue.add(t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME)
+        message_queue.add(t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME, connection)

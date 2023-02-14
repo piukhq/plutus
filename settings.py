@@ -29,3 +29,5 @@ RABBITMQ_DSN = getenv("AMQP_DSN", f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@{RABB
 
 CONSUME_QUEUE_NAME = getenv("CONSUME_QUEUE", required=True, default="tx_plutus_dw")
 DW_QUEUE_NAME = getenv("DW_QUEUE", required=True, default="tx_export_dw")
+DEAD_LETTER_EXCHANGE = getenv("DEAD_LETTER_EXCHANGE", required=True, default="tx_plutus_dl_exchange")
+DEAD_LETTER_QUEUE = getenv("DEAD_LETTER_QUEUE", required=True, default="tx_plutus_dl_queue")
