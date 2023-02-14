@@ -1,10 +1,10 @@
-from typing import Any, Type, cast
+from typing import Any, Type
 
 import kombu
 from kombu.mixins import ConsumerMixin
-from app.message_queue import publish_to_exchange
 
 import settings
+from app.message_queue import publish_to_exchange
 
 from .export_transaction import export_transaction_request_event, export_transaction_response_event
 
