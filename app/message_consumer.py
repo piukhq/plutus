@@ -2,7 +2,7 @@ from typing import Any, Type, cast
 
 import kombu
 from kombu.mixins import ConsumerMixin
-from message_queue import publish_to_exchange
+from app.message_queue import publish_to_exchange
 
 import settings
 
