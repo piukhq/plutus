@@ -1,6 +1,3 @@
-import typing as t
-
-
 def _get_bpl_response(response_body: dict) -> str | dict:
     try:
         return response_body["code"]
