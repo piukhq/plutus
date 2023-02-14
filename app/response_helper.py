@@ -20,5 +20,5 @@ def get_response_body(scheme_slug: str, response_body: dict | str) -> dict | str
         scheme_slug = "bpl"
 
     if scheme_slug in RESPONSE_METHODS.keys():
-        response_body = RESPONSE_METHODS[scheme_slug](response_body)  # mypy: ignore-errors
+        response_body = RESPONSE_METHODS[scheme_slug](response_body)  # type: ignore
     return response_body

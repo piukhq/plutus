@@ -6,7 +6,7 @@ class ConfigVarRequiredError(Exception):
     pass
 
 
-def getenv(key: str, default: str = None, conv: t.Callable = str, required: bool = True) -> t.Any:
+def getenv(key: str, default: str = "", conv: t.Callable = str, required: bool = True) -> t.Any:
     """If `default` is None, then the var is non-optional."""
     var = os.getenv(key, default)
     if var is None and required is True:
