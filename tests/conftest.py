@@ -32,9 +32,13 @@ TRANSACTIONS = [
 
 
 @pytest.fixture()
-def message_consumer():
-    connection = Mock()
-    return MessageConsumer(connection=connection)
+def connection_mock():
+    return Mock()
+
+
+@pytest.fixture()
+def message_consumer(connection_mock):
+    return MessageConsumer(connection=connection_mock)
 
 
 @pytest.fixture()

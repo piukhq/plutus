@@ -7,25 +7,29 @@ from app.message_consumer import MessageConsumer
 
 @mock.patch("app.message_consumer.export_transaction_request_event")
 @mock.patch("app.message_consumer.export_transaction_response_event")
-def test_on_message_exports_request_if_retry_count_0(export_response, export_request, message_consumer):
+def test_on_message_exports_request_if_retry_count_0(
+    export_response, export_request, message_consumer, connection_mock
+):
     body = {"retry_count": 0}
     message_consumer.on_message(body, mock.Mock())
-    export_request.assert_called_with(data=body)
-    export_response.assert_called_with(data=body)
+    export_request.assert_called_with(data=body, connection=connection_mock)
+    export_response.assert_called_with(data=body, connection=connection_mock)
 
 
 @mock.patch("app.message_consumer.export_transaction_request_event")
 @mock.patch("app.message_consumer.export_transaction_response_event")
-def test_on_message_exports_request_if_retry_count_bigger_than_0(export_response, export_request, message_consumer):
+def test_on_message_exports_request_if_retry_count_bigger_than_0(
+    export_response, export_request, message_consumer, connection_mock
+):
     body = {"retry_count": 1}
-    MessageConsumer.on_message(body, mock.Mock())
+    message_consumer.on_message(body, mock.Mock())
     assert not export_request.called
-    export_response.assert_called_with(data=body)
+    export_response.assert_called_with(data=body, connection=connection_mock)
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_request(mock_add, audit_log_squaremeal_success_200):
-    export_transaction_request_event(audit_log_squaremeal_success_200)
+def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_mock):
+    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported",
@@ -52,12 +56,13 @@ def test_export_request(mock_add, audit_log_squaremeal_success_200):
         },
         "squaremeal",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_response_data_in_body(mock_add, audit_log_squaremeal_success_200):
-    export_transaction_response_event(audit_log_squaremeal_success_200)
+def test_export_response_data_in_body(mock_add, audit_log_squaremeal_success_200, connection_mock):
+    export_transaction_response_event(audit_log_squaremeal_success_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported.response",
@@ -70,12 +75,13 @@ def test_export_response_data_in_body(mock_add, audit_log_squaremeal_success_200
         },
         "squaremeal",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_response_wasabi_success(mock_add, audit_log_wasabi_success_200):
-    export_transaction_response_event(audit_log_wasabi_success_200)
+def test_export_response_wasabi_success(mock_add, audit_log_wasabi_success_200, connection_mock):
+    export_transaction_response_event(audit_log_wasabi_success_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported.response",
@@ -88,12 +94,13 @@ def test_export_response_wasabi_success(mock_add, audit_log_wasabi_success_200):
         },
         "wasabi-club",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_response_wasabi_fail(mock_add, audit_log_wasabi_failure_200):
-    export_transaction_response_event(audit_log_wasabi_failure_200)
+def test_export_response_wasabi_fail(mock_add, connection_mock, audit_log_wasabi_failure_200):
+    export_transaction_response_event(audit_log_wasabi_failure_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported.response",
@@ -106,12 +113,13 @@ def test_export_response_wasabi_fail(mock_add, audit_log_wasabi_failure_200):
         },
         "wasabi-club",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_bpl_export_success(mock_add, audit_log_viator_success_200):
-    export_transaction_response_event(audit_log_viator_success_200)
+def test_bpl_export_success(mock_add, audit_log_viator_success_200, connection_mock):
+    export_transaction_response_event(audit_log_viator_success_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported.response",
@@ -124,12 +132,13 @@ def test_bpl_export_success(mock_add, audit_log_viator_success_200):
         },
         "bpl-viator",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
 
 
 @mock.patch("app.export_transaction.message_queue.add")
-def test_bpl_export_fail(mock_add, audit_log_viator_404_fail):
-    export_transaction_response_event(audit_log_viator_404_fail)
+def test_bpl_export_fail(mock_add, audit_log_viator_404_fail, connection_mock):
+    export_transaction_response_event(audit_log_viator_404_fail, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported.response",
@@ -142,4 +151,5 @@ def test_bpl_export_fail(mock_add, audit_log_viator_404_fail):
         },
         "bpl-viator",
         settings.DW_QUEUE_NAME,
+        connection_mock,
     )
