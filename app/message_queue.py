@@ -1,15 +1,15 @@
 import logging
 
 import kombu
-from kombu import Connection, Exchange
+from kombu import Connection, Exchange, Queue
 
 import settings
 
 log = logging.getLogger(__name__)
 
 
-dl_exchange = kombu.Exchange(settings.DEAD_LETTER_EXCHANGE, type="fanout")
-dw_queue = kombu.Queue(
+dl_exchange = Exchange(settings.DEAD_LETTER_EXCHANGE, type="fanout")
+dw_queue = Queue(
     settings.DW_QUEUE_NAME,
     queue_arguments={
         "x-dead-letter-routing-key": settings.DEAD_LETTER_QUEUE,

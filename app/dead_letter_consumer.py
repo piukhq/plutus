@@ -25,18 +25,21 @@ class DeadLetterConsumer(ConsumerMixin):
         resend_count = headers["x-death"][0]["count"]
         if resend_count > MAX_RESEND:
             log.debug(
-                f"Message for transaction {body['transaction_id']} not delivered to data warehouse after {MAX_RESEND} attempts: {body}"
+                f"Message for transaction {body['transaction_id']} not delivered to data warehouse "
+                f"after {MAX_RESEND} attempts."
             )
             message.reject()
         else:
             delay = 300 * resend_count
             log.debug(
-                f"Resending message for transaction {body['transaction_id']} to data warehouse. Next attempt {resend_count} in {delay/60} minutes"
+                f"Resending message for transaction {body['transaction_id']} to data warehouse. "
+                f"Next attempt {resend_count} in {delay/60} minutes"
             )
             producer = self.connection.Producer(serializer="json")
             producer.publish(
                 body, headers=message.headers, routing_key=settings.DW_QUEUE_NAME, properties={"x-delay": delay}
             )
+            message.ack()
 
 
 def main():

@@ -3,7 +3,6 @@ import typing as t
 import dateutil.parser as parser
 from kombu import Connection
 
-import settings
 from app import message_queue
 from app.response_helper import get_response_body
 
