@@ -20,9 +20,10 @@ use a tool like [direnv](https://direnv.net/).
 
 ### Running the Project
 ```bash
-python consumer.py
+python message_consumer.py
+python dead_letter_consumer.py
 ```
-The consumer module can be found in the project's root directory.
+The consumer modules can be found in the project's root directory. Dead letter consumer is necessary for retries.
 
 ### Deployment
 There is a Dockerfile provided in the project root. Build an image from this to

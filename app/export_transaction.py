@@ -70,7 +70,7 @@ def export_transaction_request_event(data: dict, connection: Connection) -> None
             approval_code=transaction["approval_code"],
             uid=transaction["export_uid"],
         )
-        message_queue.add(t.cast(dict, exported_transaction_request), provider_slug, settings.DW_QUEUE_NAME, connection)
+        message_queue.add(t.cast(dict, exported_transaction_request), connection)
 
 
 def export_transaction_response_event(data: dict, connection: Connection) -> None:
@@ -90,6 +90,4 @@ def export_transaction_response_event(data: dict, connection: Connection) -> Non
             response_message=response_body,
             uid=transaction["export_uid"],
         )
-        message_queue.add(
-            t.cast(dict, exported_transaction_response), provider_slug, settings.DW_QUEUE_NAME, connection
-        )
+        message_queue.add(t.cast(dict, exported_transaction_response), connection)

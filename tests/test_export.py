@@ -53,8 +53,6 @@ def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_m
             "approval_code": "",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "squaremeal",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
 
@@ -72,8 +70,6 @@ def test_export_response_data_in_body(mock_add, audit_log_squaremeal_success_200
             "response_message": "Bink Transaction details processed sucessfully!",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "squaremeal",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
 
@@ -91,8 +87,6 @@ def test_export_response_wasabi_success(mock_add, audit_log_wasabi_success_200, 
             "response_message": "Stamp awarded",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "wasabi-club",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
 
@@ -110,8 +104,6 @@ def test_export_response_wasabi_fail(mock_add, connection_mock, audit_log_wasabi
             "response_message": "Internal Error",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "wasabi-club",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
 
@@ -129,8 +121,6 @@ def test_bpl_export_success(mock_add, audit_log_viator_success_200, connection_m
             "response_message": "Awarded",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "bpl-viator",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
 
@@ -148,7 +138,5 @@ def test_bpl_export_fail(mock_add, audit_log_viator_404_fail, connection_mock):
             "response_message": "NO_ACTIVE_CAMPAIGNS",
             "uid": "e06dbc5f-8ed3-4a49-b830-6f5e65b563ec",
         },
-        "bpl-viator",
-        settings.DW_QUEUE_NAME,
         connection_mock,
     )
