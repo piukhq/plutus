@@ -64,14 +64,12 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: true
-          target: base
           tags: |
             binkcore.azurecr.io/${{ github.event.repository.name }}:${{ steps.date.outputs.date }}
             binkcore.azurecr.io/${{ github.event.repository.name }}:latest
       - uses: docker/build-push-action@v2
         with:
           push: true
-          target: harness
           tags: |
             binkcore.azurecr.io/${{ github.event.repository.name }}:harness-${{ steps.date.outputs.date }}
   release_staging:
@@ -95,7 +93,6 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: true
-          target: base
           tags: |
             binkcore.azurecr.io/${{ github.event.repository.name }}:${{ github.event.release.tag_name }}
             binkcore.azurecr.io/${{ github.event.repository.name }}:staging-${{ github.event.release.tag_name }}
