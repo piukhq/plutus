@@ -39,7 +39,6 @@ class DeadLetterConsumer(ConsumerMixin):
             producer.publish(
                 body, headers=message.headers, routing_key=settings.DW_QUEUE_NAME, properties={"x-delay": delay}
             )
-            message.ack()
 
 
 def main():
