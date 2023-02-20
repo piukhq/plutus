@@ -5,7 +5,7 @@ from kombu.mixins import ConsumerMixin
 
 import settings
 
-from export_transaction import export_transaction_request_event, export_transaction_response_event
+from app.export_transaction import export_transaction_request_event, export_transaction_response_event
 
 
 class MessageConsumer(ConsumerMixin):
