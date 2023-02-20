@@ -7,7 +7,7 @@ RUN poetry config virtualenvs.create false
 
 COPY . .
 
-RUN poetry build
+RUN poetry install
 
 ENTRYPOINT [ "linkerd-await", "--" ]
 CMD ["python", "consumer.py"]
