@@ -1,14 +1,14 @@
 def _get_bpl_response(response_body: dict) -> str | dict:
     try:
         return response_body["code"]
-    except (AttributeError, TypeError):
+    except (KeyError, TypeError):
         return response_body
 
 
 def _get_wasabi_response(response_body: dict) -> str | dict:
     try:
         return response_body["Error"] if response_body.get("Error") else response_body["Message"]
-    except (AttributeError, TypeError):
+    except (KeyError, TypeError):
         return response_body
 
 
