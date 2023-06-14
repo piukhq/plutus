@@ -12,7 +12,14 @@ def _get_wasabi_response(response_body: dict) -> str | dict:
         return response_body
 
 
-RESPONSE_METHODS = {"bpl": _get_bpl_response, "wasabi-club": _get_wasabi_response}
+def _get_the_works_response(response_body: dict) -> str | dict:
+    try:
+        return response_body["result"][1]
+    except (KeyError, TypeError, IndexError):
+        return response_body
+
+
+RESPONSE_METHODS = {"bpl": _get_bpl_response, "wasabi-club": _get_wasabi_response, "the-works": _get_the_works_response}
 
 
 def get_response_body(scheme_slug: str, response_body: dict | str) -> dict | str:
