@@ -4,11 +4,11 @@ from unittest.mock import Mock
 from app.export_transaction import export_transaction_request_event, export_transaction_response_event
 
 
+@mock.patch("app.export_transaction.redis")
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_mock):
-    redis_mock = Mock()
+def test_export_request(mock_add, redis_mock, audit_log_squaremeal_success_200, connection_mock):
     redis_mock.exists.return_value = False
-    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock, redis=redis_mock)
+    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported",
@@ -37,11 +37,11 @@ def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_m
     )
 
 
+@mock.patch("app.export_transaction.redis")
 @mock.patch("app.export_transaction.message_queue.add")
-def test_export_request_record_exists_in_redis(mock_add, audit_log_squaremeal_success_200, connection_mock):
-    redis_mock = Mock()
+def test_export_request_record_exists_in_redis(mock_add, redis_mock, audit_log_squaremeal_success_200, connection_mock):
     redis_mock.exists.return_value = True
-    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock, redis=redis_mock)
+    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock)
     mock_add.assert_not_called
 
 

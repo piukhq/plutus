@@ -4,10 +4,19 @@ import dateutil.parser as parser
 from kombu import Connection
 from redis.client import Redis
 
+import settings
 from app import message_queue
 from app.response_helper import get_response_body
 
-HARMONIA_MAX_RETRY_WINDOW = 604800  # 7 days
+HARMONIA_MAX_RETRY_WINDOW = 691200  # 8 days
+
+
+redis = Redis.from_url(
+    settings.REDIS_URL,
+    socket_connect_timeout=3,
+    socket_keepalive=True,
+    retry_on_timeout=False,
+)
 
 
 class ExportedTransactionRequest(t.TypedDict):
@@ -44,7 +53,7 @@ class ExportedTransactionResponse(t.TypedDict):
     uid: str
 
 
-def export_transaction_request_event(data: dict, connection: Connection, redis: Redis) -> None:
+def export_transaction_request_event(data: dict, connection: Connection) -> None:
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
