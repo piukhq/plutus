@@ -1,33 +1,14 @@
 from unittest import mock
+from unittest.mock import Mock
 
 from app.export_transaction import export_transaction_request_event, export_transaction_response_event
 
 
-@mock.patch("app.message_consumer.export_transaction_request_event")
-@mock.patch("app.message_consumer.export_transaction_response_event")
-def test_on_message_exports_request_if_retry_count_0(
-    export_response, export_request, message_consumer, connection_mock
-):
-    body = {"retry_count": 0}
-    message_consumer.on_message(body, mock.Mock())
-    export_request.assert_called_with(data=body, connection=connection_mock)
-    export_response.assert_called_with(data=body, connection=connection_mock)
-
-
-@mock.patch("app.message_consumer.export_transaction_request_event")
-@mock.patch("app.message_consumer.export_transaction_response_event")
-def test_on_message_exports_request_if_retry_count_bigger_than_0(
-    export_response, export_request, message_consumer, connection_mock
-):
-    body = {"retry_count": 1}
-    message_consumer.on_message(body, mock.Mock())
-    assert not export_request.called
-    export_response.assert_called_with(data=body, connection=connection_mock)
-
-
 @mock.patch("app.export_transaction.message_queue.add")
 def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_mock):
-    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock)
+    redis_mock = Mock()
+    redis_mock.exists.return_value = False
+    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock, redis=redis_mock)
     mock_add.assert_called_with(
         {
             "event_type": "transaction.exported",
@@ -54,6 +35,14 @@ def test_export_request(mock_add, audit_log_squaremeal_success_200, connection_m
         },
         connection_mock,
     )
+
+
+@mock.patch("app.export_transaction.message_queue.add")
+def test_export_request_record_exists_in_redis(mock_add, audit_log_squaremeal_success_200, connection_mock):
+    redis_mock = Mock()
+    redis_mock.exists.return_value = True
+    export_transaction_request_event(audit_log_squaremeal_success_200, connection=connection_mock, redis=redis_mock)
+    mock_add.assert_not_called
 
 
 @mock.patch("app.export_transaction.message_queue.add")

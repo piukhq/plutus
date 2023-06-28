@@ -2,9 +2,12 @@ import typing as t
 
 import dateutil.parser as parser
 from kombu import Connection
+from redis.client import Redis
 
 from app import message_queue
 from app.response_helper import get_response_body
+
+HARMONIA_MAX_RETRY_WINDOW = 604800  # 7 days
 
 
 class ExportedTransactionRequest(t.TypedDict):
@@ -41,10 +44,16 @@ class ExportedTransactionResponse(t.TypedDict):
     uid: str
 
 
-def export_transaction_request_event(data: dict, connection: Connection) -> None:
+def export_transaction_request_event(data: dict, connection: Connection, redis: Redis) -> None:
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
+        if redis.exists(transaction["transaction_id"]):
+            continue
+        else:
+            redis.set(transaction["transaction_id"], "")
+            redis.expire(transaction["transaction_id"], HARMONIA_MAX_RETRY_WINDOW)
+
         transaction_datetime = parser.parse(transaction["transaction_date"])
         exported_transaction_request = ExportedTransactionRequest(
             event_type="transaction.exported",
