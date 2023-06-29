@@ -18,8 +18,7 @@ class MessageConsumer(ConsumerMixin):
 
     def on_message(self, body: dict, message: kombu.Message) -> None:  # pragma: no cover
         try:
-            if body["retry_count"] == 0:
-                export_transaction_request_event(data=body, connection=self.connection)
+            export_transaction_request_event(data=body, connection=self.connection)
             export_transaction_response_event(data=body, connection=self.connection)
         finally:
             message.ack()

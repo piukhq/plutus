@@ -27,6 +27,8 @@ RABBITMQ_HOST = getenv("RABBITMQ_HOST", required=True, default="localhost")
 RABBITMQ_PORT = getenv("RABBITMQ_PORT", required=True, conv=int, default="5672")
 RABBITMQ_DSN = getenv("AMQP_DSN", f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@{RABBITMQ_HOST}:{RABBITMQ_PORT}//")
 
+REDIS_URL = getenv("REDIS_URL", required=True, default="redis://127.0.0.1:6379/0")
+
 CONSUME_QUEUE_NAME = getenv("CONSUME_QUEUE", required=True, default="tx_plutus_dw")
 DW_QUEUE_NAME = getenv("DW_QUEUE", required=True, default="tx_export_dw")
 DEAD_LETTER_EXCHANGE = getenv("DEAD_LETTER_EXCHANGE", required=True, default="tx_plutus_dl_exchange")
