@@ -1,5 +1,4 @@
 from unittest import mock
-from unittest.mock import Mock
 
 from app.export_transaction import export_transaction_request_event, export_transaction_response_event
 
