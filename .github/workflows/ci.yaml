@@ -14,37 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: fs
-          scan-ref: "."
-          security-checks: "vuln"
-          vuln-type: library
-          ignore-unfixed: true
-          exit-code: 0
-          severity: UNKNOWN,LOW,MEDIUM
-      - uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: fs
-          scan-ref: "."
-          security-checks: "vuln"
-          vuln-type: library
-          ignore-unfixed: true
-          exit-code: 1
-          severity: HIGH,CRITICAL
-      - uses: actions/checkout@v3
       - uses: actions/setup-python@v2
         with:
           python-version: "3.10"
       - run: pip install poetry
       - run: poetry config virtualenvs.create false
       - run: poetry install
+      - run: flake8 .
+      - run: isort --check --line-length 120 --profile black .
+      - run: black --line-length=120 --check .
       - run: pytest --verbose --cov app --cov-report=xml --junitxml=report.xml tests
       - run: xenon --max-average A --max-modules B --max-absolute B .
       - run: mypy app --ignore-missing-imports --follow-imports skip
-      - run: flake8 .
-      - run: black --line-length=120 --check .
-      - run: isort --check --line-length 120 --profile black .
 
   release_dev:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'

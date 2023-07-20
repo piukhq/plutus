@@ -21,11 +21,7 @@ def boolconv(s: str) -> bool:
     return s.lower() in ["true", "t", "yes"]
 
 
-RABBITMQ_USER = getenv("RABBITMQ_USER", required=True, default="guest")
-RABBITMQ_PASS = getenv("RABBITMQ_PASS", required=True, default="guest")
-RABBITMQ_HOST = getenv("RABBITMQ_HOST", required=True, default="localhost")
-RABBITMQ_PORT = getenv("RABBITMQ_PORT", required=True, conv=int, default="5672")
-RABBITMQ_DSN = getenv("AMQP_DSN", f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@{RABBITMQ_HOST}:{RABBITMQ_PORT}//")
+RABBITMQ_DSN = getenv("AMQP_DSN", "amqp://guest:guest@localhost:5672/")
 
 REDIS_URL = getenv("REDIS_URL", required=True, default="redis://127.0.0.1:6379/0")
 
