@@ -12,6 +12,19 @@ def _get_wasabi_response(response_body: dict) -> str | dict:
         return response_body
 
 
+def _get_itsu_response(response_body: dict) -> str | dict:
+    try:
+        if response_body.get("Errors"):
+            errors = ""
+            for error in response_body["Errors"]:
+                errors += f"{error['ErrorDescription']} "
+            return errors
+        else:
+            return response_body["ResponseStatus"]
+    except (KeyError, TypeError):
+        return response_body
+
+
 def _get_the_works_response(response_body: dict) -> str | dict:
     try:
         return response_body["result"][1]
