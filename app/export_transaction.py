@@ -57,11 +57,12 @@ def export_transaction_request_event(data: dict, connection: Connection) -> None
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
-        if redis.exists(transaction["transaction_id"]):
+        redis_key = f"{transaction['transaction_id']}_{transaction['spend_amount']}"
+        if redis.exists(redis_key):
             continue
         else:
-            redis.set(transaction["transaction_id"], "")
-            redis.expire(transaction["transaction_id"], HARMONIA_MAX_RETRY_WINDOW)
+            redis.set(redis_key, "")
+            redis.expire(redis_key, HARMONIA_MAX_RETRY_WINDOW)
 
         transaction_datetime = parser.parse(transaction["transaction_date"])
         exported_transaction_request = ExportedTransactionRequest(
