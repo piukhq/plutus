@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Plutus - Message consumer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/app/message_consumer.py",
+            "jinja": true,
+            "justMyCode": false,
+            "env": {
+                "PYTHONUNBUFFERED": "1"
+            },
+            "consoleTitle": "Plutus - Message consumer",
+        },
+        {
+            "name": "Plutus - Dead letter consumer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/app/dead_letter_consumer.py",
+            "jinja": true,
+            "justMyCode": false,
+            "env": {
+                "PYTHONUNBUFFERED": "1"
+            },
+            "consoleTitle": "Plutus - Dead letter consumer",
+        },
+    ]
+}

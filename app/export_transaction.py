@@ -57,10 +57,13 @@ def export_transaction_request_event(data: dict, connection: Connection) -> None
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
-        if redis.exists(transaction["transaction_id"]):
+        if (
+            redis.exists(transaction["transaction_id"])
+            and float(redis.hget(transaction["transaction_id"], "spend_amount")) == transaction["spend_amount"]
+        ):
             continue
         else:
-            redis.set(transaction["transaction_id"], "")
+            redis.hmset(transaction["transaction_id"], {"spend_amount": transaction["spend_amount"]})
             redis.expire(transaction["transaction_id"], HARMONIA_MAX_RETRY_WINDOW)
 
         transaction_datetime = parser.parse(transaction["transaction_date"])
