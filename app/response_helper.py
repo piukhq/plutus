@@ -32,13 +32,18 @@ def _get_the_works_response(response_body: dict) -> str | dict:
         return response_body
 
 
-RESPONSE_METHODS = {"bpl": _get_bpl_response, "wasabi-club": _get_wasabi_response, "the-works": _get_the_works_response}
+RESPONSE_METHODS = {
+    "bpl": _get_bpl_response,
+    "wasabi-club": _get_wasabi_response,
+    "the-works": _get_the_works_response,
+    "itsu": _get_itsu_response,
+}
 
 
 def get_response_body(scheme_slug: str, response_body: dict | str) -> dict | str:
     if "bpl" in scheme_slug:
         scheme_slug = "bpl"
 
-    if scheme_slug in RESPONSE_METHODS.keys():
-        response_body = RESPONSE_METHODS[scheme_slug](response_body)  # type: ignore
+    if get_response_body := RESPONSE_METHODS.get(scheme_slug):
+        response_body = get_response_body(response_body)  # type: ignore
     return response_body
