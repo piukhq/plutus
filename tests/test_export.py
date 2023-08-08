@@ -1,6 +1,7 @@
 from unittest import mock
 
 from app.export_transaction import export_transaction_request_event, export_transaction_response_event
+from app.response_helper import _get_itsu_response
 
 
 @mock.patch("app.export_transaction.redis")
@@ -127,3 +128,30 @@ def test_bpl_export_fail(mock_add, audit_log_viator_404_fail, connection_mock):
         },
         connection_mock,
     )
+
+
+def test_get_itsu_response_success():
+    body = {
+        "ResponseStatus": True,
+        "Errors": [],
+    }
+
+    assert _get_itsu_response(body) is True
+
+
+def test_get_itsu_response_errors():
+    body = {"ResponseStatus": False, "Errors": [{"ErrorCode": 20, "ErrorDescription": "Invalid location ID (SiteID)"}]}
+
+    assert _get_itsu_response(body) == "Invalid location ID (SiteID)"
+
+
+def test_get_itsu_response_multiple_errors():
+    body = {
+        "ResponseStatus": False,
+        "Errors": [
+            {"ErrorCode": 20, "ErrorDescription": "First error"},
+            {"ErrorCode": 21, "ErrorDescription": "Second error"},
+        ],
+    }
+
+    assert _get_itsu_response(body) == "First error Second error"
