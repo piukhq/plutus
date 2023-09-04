@@ -30,7 +30,6 @@ def _get_slim_chickens_response(response_body: dict) -> str | dict:
             return error["description"]
         else:
             return response_body["message"]
-
     except (KeyError, TypeError):
         return response_body
 
@@ -47,7 +46,7 @@ RESPONSE_METHODS = {
     "wasabi-club": _get_wasabi_response,
     "the-works": _get_the_works_response,
     "itsu": _get_itsu_response,
-    "slim-chickens": _get_slim_chickens_response
+    "slim-chickens": _get_slim_chickens_response,
 }
 
 
