@@ -22,6 +22,18 @@ def _get_itsu_response(response_body: dict) -> str | dict:
         return response_body
 
 
+def _get_slim_chickens_response(response_body: dict) -> str | dict:
+    try:
+        if error := response_body.get("errorMessage"):
+            return error
+        elif error := response_body.get("error"):
+            return error["description"]
+        else:
+            return response_body["message"]
+    except (KeyError, TypeError):
+        return response_body
+
+
 def _get_the_works_response(response_body: dict) -> str | dict:
     try:
         return response_body["result"][1]
@@ -34,6 +46,7 @@ RESPONSE_METHODS = {
     "wasabi-club": _get_wasabi_response,
     "the-works": _get_the_works_response,
     "itsu": _get_itsu_response,
+    "slim-chickens": _get_slim_chickens_response,
 }
 
 
