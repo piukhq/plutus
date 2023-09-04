@@ -26,8 +26,11 @@ def _get_slim_chickens_response(response_body: dict) -> str | dict:
     try:
         if error := response_body.get("errorMessage"):
             return error
+        elif error := response_body.get("error"):
+            return error["description"]
         else:
-            return response_body["error"]["description"]
+            return response_body["message"]
+
     except (KeyError, TypeError):
         return response_body
 
