@@ -5,7 +5,7 @@ def _get_bpl_response(response_body: dict) -> str | dict:
         return response_body
 
 
-def _get_wasabi_response(response_body: dict) -> str | dict:
+def _get_acteol_response(response_body: dict) -> str | dict:
     try:
         return response_body["Error"] if response_body.get("Error") else response_body["Message"]
     except (KeyError, TypeError):
@@ -43,10 +43,11 @@ def _get_the_works_response(response_body: dict) -> str | dict:
 
 RESPONSE_METHODS = {
     "bpl": _get_bpl_response,
-    "wasabi-club": _get_wasabi_response,
+    "wasabi-club": _get_acteol_response,
     "the-works": _get_the_works_response,
     "itsu": _get_itsu_response,
     "slim-chickens": _get_slim_chickens_response,
+    "stonegate": _get_acteol_response,
 }
 
 
