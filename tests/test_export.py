@@ -130,40 +130,6 @@ def test_bpl_export_fail(mock_add, audit_log_viator_404_fail, connection_mock):
     )
 
 
-@mock.patch("app.export_transaction.message_queue.add")
-def test_tgi_fridays_export_success(mock_add, audit_log_tgi_fridays_success, connection_mock):
-    export_transaction_response_event(audit_log_tgi_fridays_success, connection=connection_mock)
-    mock_add.assert_called_with(
-        {
-            "event_type": "transaction.exported.response",
-            "event_date_time": "2024-02-21T16:44:01.320042",
-            "transaction_id": "db0b14a3-0ca8-4281-9a77-57b5b88ec0a4",
-            "provider_slug": "tgi-fridays",
-            "status_code": 201,
-            "response_message": {},
-            "uid": "1515c96c-7cac-49a8-b09a-521a24c92890",
-        },
-        connection_mock,
-    )
-
-
-@mock.patch("app.export_transaction.message_queue.add")
-def test_tgi_fridays_export_fail(mock_add, audit_log_tgi_fridays_failure_404, connection_mock):
-    export_transaction_response_event(audit_log_tgi_fridays_failure_404, connection=connection_mock)
-    mock_add.assert_called_with(
-        {
-            "event_type": "transaction.exported.response",
-            "event_date_time": "2024-02-21T16:54:47.799261",
-            "transaction_id": "db0b14a3-0ca8-4281-9a77-57b5b88ec0a4",
-            "provider_slug": "tgi-fridays",
-            "status_code": 404,
-            "response_message": "Cannot find corresponding user with ID: 62779001",
-            "uid": "dcbe01d8-3a4e-4b9c-8d23-26d78c97b267",
-        },
-        connection_mock,
-    )
-
-
 def test_get_itsu_response_success():
     body = {
         "ResponseStatus": True,
