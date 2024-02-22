@@ -108,8 +108,8 @@ def audit_log_tgi_fridays_failure_404():
                 "mid": "test_primary_mid",
                 "scheme_account_id": 1,
                 "encrypted_credentials": "2sWIFuD/An+rmhRhv3l4kOwXs9hXIM3sLmFRhJ8AZ/ONIBoY2dnh2EJsYWpKdrcYWaH1sQoMeU5T"
-                                         "vdlW2m9N/2fsk6WbkbyeZPq0cxPqn0Wo0iNiuWwkYcgJ6c8/jpEvGwHKbzPBpoA44PIvMQzXjRJr"
-                                         "BvqyJHsiLI2m/C7FDiQvb5Ob3e8+cdCBqEKJukz/",
+                "vdlW2m9N/2fsk6WbkbyeZPq0cxPqn0Wo0iNiuWwkYcgJ6c8/jpEvGwHKbzPBpoA44PIvMQzXjRJr"
+                "BvqyJHsiLI2m/C7FDiQvb5Ob3e8+cdCBqEKJukz/",
                 "status": "EXPORTED",
                 "feed_type": None,
                 "location_id": None,
@@ -162,8 +162,8 @@ def audit_log_tgi_fridays_success():
                 "mid": "test_primary_mid",
                 "scheme_account_id": 1,
                 "encrypted_credentials": "wIyR25xEW2Rm3oi5RBzE1FVZZN4qyidoiwr6N3+WrP2ScH4Sb5GQr8Ze6A+MHLMgYIfX0iCO56"
-                                         "B4qCgXcbi3mdxiAvdSp6+rI+Gb7Ch23rfwv+0W/IPlBdr2SdqL2CoJEt+69YVFREp5KdOg5BdOd"
-                                         "MZfmdI6C0GTKd5nOVdXQKyXOxLsVCGnb5j5NfMN9zdR",
+                "B4qCgXcbi3mdxiAvdSp6+rI+Gb7Ch23rfwv+0W/IPlBdr2SdqL2CoJEt+69YVFREp5KdOg5BdOd"
+                "MZfmdI6C0GTKd5nOVdXQKyXOxLsVCGnb5j5NfMN9zdR",
                 "status": "EXPORTED",
                 "feed_type": None,
                 "location_id": None,
