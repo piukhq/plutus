@@ -34,6 +34,14 @@ def _get_slim_chickens_response(response_body: dict) -> str | dict:
         return response_body
 
 
+def _get_tgi_fridays_response(response_body: dict) -> str | dict:
+    try:
+        for _, v in response_body["errors"].items():
+            return v
+    except (KeyError, TypeError):
+        return response_body
+
+
 def _get_the_works_response(response_body: dict) -> str | dict:
     try:
         return response_body["result"][1]
@@ -48,6 +56,7 @@ RESPONSE_METHODS = {
     "itsu": _get_itsu_response,
     "slim-chickens": _get_slim_chickens_response,
     "stonegate": _get_acteol_response,
+    "tgi-fridays": _get_tgi_fridays_response,
 }
 
 

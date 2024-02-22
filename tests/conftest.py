@@ -93,6 +93,106 @@ def audit_log_viator_success_200():
 
 
 @pytest.fixture()
+def audit_log_tgi_fridays_failure_404():
+    return {
+        "provider_slug": "tgi-fridays",
+        "transactions": [
+            {
+                "event_date_time": "2024-02-21T16:54:47.799261",
+                "user_id": 1,
+                "transaction_id": "db0b14a3-0ca8-4281-9a77-57b5b88ec0a4",
+                "transaction_date": "2024-02-20 11:06:23",
+                "spend_amount": 5566,
+                "spend_currency": "GBP",
+                "loyalty_id": "test_loyalty_id",
+                "mid": "test_primary_mid",
+                "scheme_account_id": 1,
+                "encrypted_credentials": "2sWIFuD/An+rmhRhv3l4kOwXs9hXIM3sLmFRhJ8AZ/ONIBoY2dnh2EJsYWpKdrcYWaH1sQoMeU5TvdlW2m9N/2fsk6WbkbyeZPq0cxPqn0Wo0iNiuWwkYcgJ6c8/jpEvGwHKbzPBpoA44PIvMQzXjRJrBvqyJHsiLI2m/C7FDiQvb5Ob3e8+cdCBqEKJukz/",
+                "status": "EXPORTED",
+                "feed_type": None,
+                "location_id": None,
+                "merchant_internal_id": None,
+                "payment_card_account_id": None,
+                "settlement_key": None,
+                "authorisation_code": "",
+                "approval_code": "",
+                "loyalty_identifier": "test_loyalty_id",
+                "record_uid": None,
+                "export_uid": "dcbe01d8-3a4e-4b9c-8d23-26d78c97b267",
+            }
+        ],
+        "audit_data": {
+            "request": {
+                "body": {
+                    "user_id": "test_loyalty_id",
+                    "subject": "Gifts from us",
+                    "message": "You’ve been awarded stripes",
+                    "gift_reason": "reason",
+                    "gift_count": 5566,
+                    "location_id": "test_primary_mid",
+                    "request_url": "http://testing.punchh.com",
+                },
+                "timestamp": "2024-02-21 16:54:47",
+            },
+            "response": {
+                "body": {"errors": {"user_not_found": "Cannot find corresponding user with ID: 62779001"}},
+                "status_code": 404,
+                "timestamp": "2024-02-21 16:54:47",
+            },
+        },
+        "retry_count": 1,
+    }
+
+
+@pytest.fixture()
+def audit_log_tgi_fridays_success():
+    return {
+        "provider_slug": "tgi-fridays",
+        "transactions": [
+            {
+                "event_date_time": "2024-02-21T16:44:01.320042",
+                "user_id": 1,
+                "transaction_id": "db0b14a3-0ca8-4281-9a77-57b5b88ec0a4",
+                "transaction_date": "2024-02-20 11:06:23",
+                "spend_amount": 5566,
+                "spend_currency": "GBP",
+                "loyalty_id": "test_loyalty_id",
+                "mid": "test_primary_mid",
+                "scheme_account_id": 1,
+                "encrypted_credentials": "wIyR25xEW2Rm3oi5RBzE1FVZZN4qyidoiwr6N3+WrP2ScH4Sb5GQr8Ze6A+MHLMgYIfX0iCO56B4qCgXcbi3mdxiAvdSp6+rI+Gb7Ch23rfwv+0W/IPlBdr2SdqL2CoJEt+69YVFREp5KdOg5BdOdMZfmdI6C0GTKd5nOVdXQKyXOxLsVCGnb5j5NfMN9zdR",
+                "status": "EXPORTED",
+                "feed_type": None,
+                "location_id": None,
+                "merchant_internal_id": None,
+                "payment_card_account_id": None,
+                "settlement_key": None,
+                "authorisation_code": "",
+                "approval_code": "",
+                "loyalty_identifier": "test_loyalty_id",
+                "record_uid": None,
+                "export_uid": "1515c96c-7cac-49a8-b09a-521a24c92890",
+            }
+        ],
+        "audit_data": {
+            "request": {
+                "body": {
+                    "user_id": "test_loyalty_id",
+                    "subject": "Gifts from us",
+                    "message": "You’ve been awarded stripes",
+                    "gift_reason": "reason",
+                    "gift_count": 5566,
+                    "location_id": "test_primary_mid",
+                    "request_url": "https://test.tgi.com/path/transaction",
+                },
+                "timestamp": "2024-02-21 16:32:19",
+            },
+            "response": {"body": {}, "status_code": 201, "timestamp": "2024-02-21 16:44:01"},
+        },
+        "retry_count": 1,
+    }
+
+
+@pytest.fixture()
 def audit_log_squaremeal_success_200():
     return {
         "provider_slug": "squaremeal",
