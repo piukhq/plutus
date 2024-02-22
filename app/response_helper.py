@@ -36,8 +36,7 @@ def _get_slim_chickens_response(response_body: dict) -> str | dict:
 
 def _get_tgi_fridays_response(response_body: dict) -> str | dict:
     try:
-        for _, v in response_body["errors"].items():
-            return v
+        return response_body["errors"][next(iter(response_body["errors"]))]
     except (KeyError, TypeError):
         return response_body
 
