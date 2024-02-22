@@ -1,0 +1,24 @@
+#!/bin/sh
+. scripts/_common
+
+info 'Running flake8...'
+flake8 .
+hr
+
+info 'Running isort...'
+isort --check --line-length 120 --profile black .
+hr
+
+info 'Running black...'
+black --line-length=120 --check .
+hr
+
+info 'Running xenon...'
+xenon --max-average A --max-modules B --max-absolute B .
+hr
+
+info 'Running mypy...'
+mypy app --ignore-missing-imports --follow-imports skip
+hr
+
+info 'All passed!'
