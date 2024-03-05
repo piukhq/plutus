@@ -9,5 +9,4 @@ COPY . .
 
 RUN poetry install
 
-ENTRYPOINT [ "linkerd-await", "--" ]
 CMD ["python", "consumer.py"]
