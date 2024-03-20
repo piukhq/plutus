@@ -57,7 +57,10 @@ def export_transaction_request_event(data: dict, connection: Connection) -> None
     transactions = data["transactions"]
     provider_slug = data["provider_slug"]
     for transaction in transactions:
-        redis_key = f"{transaction['transaction_id']}_{transaction['spend_amount']}"
+        if transaction["feed_type"]:
+            redis_key = f"{transaction['transaction_id']}_{transaction['spend_amount']}_{transaction['feed_type']}"
+        else:
+            redis_key = f"{transaction['transaction_id']}_{transaction['spend_amount']}"
         if redis.exists(redis_key):
             continue
         else:
